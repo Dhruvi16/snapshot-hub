@@ -1,10 +1,10 @@
 {
   "master": {
     "network": "homestead",
-    "chainId": 1,
+    "chainId": 3,
     "subgraphUrl": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer",
     "hubUrl": "https://vote.balancer.finance",
-    "multicall": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+    "multicall": "0x76c23acc8589b57Bacf3ed71409f087165f238Fc",
     "connectors": {
       "injected": {
         "id": "injected",
@@ -29,10 +29,10 @@
   },
   "develop": {
     "network": "homestead",
-    "chainId": 1,
+    "chainId": 3,
     "subgraphUrl": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer",
     "hubUrl": "https://beta.vote.balancer.finance",
-    "multicall": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+    "multicall": "0x76c23acc8589b57Bacf3ed71409f087165f238Fc",
     "connectors": {
       "injected": {
         "id": "injected",
@@ -57,10 +57,10 @@
   },
   "local": {
     "network": "homestead",
-    "chainId": 1,
+    "chainId": 3,
     "subgraphUrl": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer",
-    "hubUrl": "http://localhost:3000",
-    "multicall": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+    "hubUrl": "http://localhost:8080",
+    "multicall": "0x76c23acc8589b57Bacf3ed71409f087165f238Fc",
     "connectors": {
       "injected": {
         "id": "injected",

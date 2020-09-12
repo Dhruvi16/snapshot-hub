@@ -12,10 +12,10 @@
       class="px-4 py-3 border-top d-flex"
     >
       <User :address="address" :verified="namespace.verified" class="column" />
-      <div
+      <!-- <div
         v-text="proposal.msg.payload.choices[vote.msg.payload.choice - 1]"
         class="flex-auto text-center text-white"
-      />
+      /> -->
       <div class="column text-right">
         <span
           v-text="

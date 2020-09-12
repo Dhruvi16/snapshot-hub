@@ -5,7 +5,7 @@
         <div class="d-flex flex-items-center" style="height: 78px;">
           <div class="flex-auto d-flex flex-items-center">
             <router-link
-              :to="{ name: 'home' }"
+              :to="{ name: 'dapps' }"
               class="d-inline-block text-blue d-flex"
               style="padding-top: 2px;"
             >
@@ -19,14 +19,14 @@
           </div>
           <div :key="web3.account">
             <template v-if="web3.account && !wrongNetwork">
-              <UiButton
+              <!-- <UiButton
                 @click="modalVotingPowerOpen = true"
                 :loading="loading"
                 class="button-outline mr-2"
               >
                 {{ _numeral(gov.votingPower) }}
                 {{ gov.namespace.symbol }}
-              </UiButton>
+              </UiButton> -->
               <UiButton
                 @click="modalOpen = true"
                 class="button-outline"

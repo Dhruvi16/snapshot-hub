@@ -1,11 +1,11 @@
 <template>
   <Container :slim="true">
-    <div class="px-4 px-md-0 mb-3">
+    <!-- <div class="px-4 px-md-0 mb-3">
       <router-link :to="{ name: 'home' }" class="text-gray">
         <Icon name="back" size="22" class="v-align-middle" />
         {{ namespace.name || _shorten(namespace.token) }}
       </router-link>
-    </div>
+    </div> -->
     <div>
       <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5">
         <div class="px-4 px-md-0">
@@ -15,17 +15,45 @@
               v-model="form.name"
               maxlength="128"
               class="h1 mb-2 input"
-              placeholder="Question"
+              placeholder="Name of DApp"
+            />
+            <input
+              v-autofocus
+              v-model="form.url"
+              maxlength="128"
+              class="h1 mb-2 input"
+              placeholder="URL of DApp"
+            />
+            <input
+              v-autofocus
+              v-model="form.category"
+              maxlength="128"
+              class="h1 mb-2 input"
+              placeholder="Category DApp"
+            />
+            <input
+              v-autofocus
+              v-model="form.builtOn"
+              maxlength="128"
+              class="h1 mb-2 input"
+              placeholder="Built on"
+            />
+            <input
+              v-autofocus
+              v-model="form.stage"
+              maxlength="128"
+              class="h1 mb-2 input"
+              placeholder="stage"
             />
             <textarea-autosize
-              v-model="form.body"
+              v-model="form.description"
               maxlength="10240"
               class="input"
-              placeholder="What is your proposal?"
+              placeholder="Description of dapp"
             />
           </div>
         </div>
-        <Block title="Choices">
+        <!-- <Block title="Choices">
           <div v-if="form.choices.length > 0" class="overflow-hidden mb-2">
             <div
               v-for="(choice, i) in form.choices"
@@ -47,11 +75,11 @@
           <UiButton @click="addChoice" class="d-block width-full">
             Add choice
           </UiButton>
-        </Block>
+        </Block> -->
       </div>
       <div class="col-12 col-lg-4 float-left">
         <Block title="Actions">
-          <div class="mb-2">
+          <!-- <div class="mb-2">
             <UiButton
               @click="[(modalOpen = true), (selectedDate = 'start')]"
               class="width-full mb-2"
@@ -74,7 +102,7 @@
                 placeholder="Snapshot block number"
               />
             </UiButton>
-          </div>
+          </div> -->
           <UiButton
             @click="handleSubmit"
             :disabled="!isValid"
@@ -86,29 +114,32 @@
         </Block>
       </div>
     </div>
-    <ModalSelectDate
+    <!-- <ModalSelectDate
       :value="form[selectedDate]"
       :selectedDate="selectedDate"
       :open="modalOpen"
       @close="modalOpen = false"
       @input="setDate"
-    />
+    /> -->
   </Container>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import namespaces from '@/namespaces.json';
+import moment from 'moment';
 
 export default {
   data() {
     return {
-      key: this.$route.params.key,
+      // key: this.$route.params.key,
       loading: false,
       form: {
         name: '',
-        body: '',
-        choices: ['', ''],
+        url: '',
+        category: '',
+        builtOn: '',
+        stage: '',
+        description: '',
         start: '',
         end: '',
         snapshot: ''
@@ -118,53 +149,50 @@ export default {
     };
   },
   computed: {
-    namespace() {
-      return namespaces[this.key]
-        ? namespaces[this.key]
-        : { token: this.key, verified: [] };
-    },
+    // namespace() {
+    //   return namespaces[this.key]
+    //     ? namespaces[this.key]
+    //     : { token: this.key, verified: [] };
+    // },
     isValid() {
+      return true;
       // const ts = (Date.now() / 1e3).toFixed();
-      return (
-        !this.loading &&
-        this.web3.account &&
-        this.form.name &&
-        this.form.body &&
-        this.form.start &&
-        // this.form.start >= ts &&
-        this.form.end &&
-        this.form.end > this.form.start &&
-        this.form.choices.length >= 2 &&
-        this.form.choices.reduce((a, b) => (!a ? false : b), true)
-      );
+      // return (
+      //   !this.loading &&
+      //   this.web3.account &&
+      //   this.form.name &&
+      //   this.form.body &&
+      //   this.form.start &&
+      //   // this.form.start >= ts &&
+      //   this.form.end &&
+      //   this.form.end > this.form.start &&
+      //   this.form.choices.length >= 2 &&
+      //   this.form.choices.reduce((a, b) => (!a ? false : b), true)
+      // );
     }
   },
   methods: {
     ...mapActions(['send']),
-    addChoice() {
-      this.form.choices.push('');
-    },
-    removeChoice(i) {
-      delete this.form.choices[i];
-      this.form.choices = this.form.choices.filter(String);
-    },
-    setDate(ts) {
-      if (this.selectedDate) {
-        this.form[this.selectedDate] = ts;
-      }
-    },
     async handleSubmit() {
       this.loading = true;
+      this.form.start = moment()
+        .add(1, 'weeks')
+        .startOf('isoWeek')
+        .unix();
+
+      this.form.end = moment()
+        .add(1, 'weeks')
+        .endOf('isoWeek')
+        .unix();
+
       try {
         const { ipfsHash } = await this.send({
-          token: this.namespace.token,
           type: 'proposal',
           payload: this.form
         });
         this.$router.push({
-          name: 'proposal',
+          name: 'dapp',
           params: {
-            key: this.key,
             id: ipfsHash
           }
         });

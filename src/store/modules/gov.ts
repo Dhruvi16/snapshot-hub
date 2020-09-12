@@ -1,15 +1,15 @@
-import Vue from 'vue';
-import { Contract } from '@ethersproject/contracts';
-import { Interface } from '@ethersproject/abi';
-import { formatEther } from '@ethersproject/units';
-import client from '@/helpers/client';
-import ipfs from '@/helpers/ipfs';
-import config from '@/helpers/config';
-import abi from '@/helpers/abi';
-import wsProvider from '@/helpers/ws';
-import { formatProposal, formatProposals } from '@/helpers/utils';
 import { version } from '@/../package.json';
+import abi from '@/helpers/abi';
+import client from '@/helpers/client';
+import config from '@/helpers/config';
+import ipfs from '@/helpers/ipfs';
+import { formatProposal, formatProposals } from '@/helpers/utils';
+import wsProvider from '@/helpers/ws';
 import namespaces from '@/namespaces.json';
+import { Interface } from '@ethersproject/abi';
+import { Contract } from '@ethersproject/contracts';
+import { formatEther } from '@ethersproject/units';
+import Vue from 'vue';
 
 const state = {
   namespace: namespaces['balancer'],
@@ -71,7 +71,7 @@ const mutations = {
 };
 
 const actions = {
-  send: async ({ commit, dispatch, rootState }, { token, type, payload }) => {
+  send: async ({ commit, dispatch, rootState }, { type, payload }) => {
     commit('SEND_REQUEST');
     try {
       const msg: any = {
@@ -79,7 +79,6 @@ const actions = {
         msg: JSON.stringify({
           version,
           timestamp: (Date.now() / 1e3).toFixed(),
-          token,
           type,
           payload
         })
@@ -99,10 +98,10 @@ const actions = {
       return;
     }
   },
-  getProposals: async ({ commit }, payload) => {
+  getProposals: async ({ commit }) => {
     commit('GET_PROPOSALS_REQUEST');
     try {
-      const proposals: any = await client.request(`${payload}/proposals`);
+      const proposals: any = await client.request('proposals');
       commit('GET_PROPOSALS_SUCCESS');
       return formatProposals(proposals);
     } catch (e) {
@@ -115,72 +114,77 @@ const actions = {
       const result: any = {};
       const [proposal, votes] = await Promise.all([
         ipfs.get(payload.id),
-        client.request(`${payload.token}/proposal/${payload.id}`)
+        client.request(`proposal/${payload.id}`)
       ]);
+      console.log('votes', votes)
       result.proposal = formatProposal(proposal);
       result.proposal.ipfsHash = payload.id;
       result.votes = votes;
-      const bptDisabled = !!result.proposal.bpt_voting_disabled;
-      const { snapshot } = result.proposal.msg.payload;
-      const blockTag =
-        snapshot > rootState.web3.blockNumber ? 'latest' : parseInt(snapshot);
-      const votersBalances = await dispatch('getVotersBalances', {
-        token: payload.token,
-        addresses: Object.values(result.votes).map((vote: any) => vote.address),
-        blockTag
-      });
-      // @ts-ignore
-      const addresses = Object.keys(votes);
-      let votingPowers = {};
-      if (!bptDisabled) {
-        votingPowers = await dispatch('getVotingPowers', {
-          token: result.proposal.msg.token,
-          blockTag,
-          addresses
-        });
-      }
-      result.votes = Object.fromEntries(
-        Object.entries(result.votes)
-          .map((vote: any) => {
-            const bptBalance = bptDisabled ? 0 : votingPowers[vote[1].address];
-            vote[1].balance = votersBalances[vote[1].address] + bptBalance;
-            vote[1].bptBalance = bptBalance;
-            vote[1].walletBalance = votersBalances[vote[1].address];
-            return vote;
-          })
-          .sort((a, b) => b[1].balance - a[1].balance)
-          .filter(vote => vote[1].balance > 0)
-      );
-      result.results = {
-        totalVotes: result.proposal.msg.payload.choices.map(
-          (choice, i) =>
-            Object.values(result.votes).filter(
-              (vote: any) => vote.msg.payload.choice === i + 1
-            ).length
-        ),
-        totalBalances: result.proposal.msg.payload.choices.map((choice, i) =>
-          Object.values(result.votes)
-            .filter((vote: any) => vote.msg.payload.choice === i + 1)
-            .reduce((a, b: any) => a + b.balance, 0)
-        ),
-        totalBptBalances: bptDisabled
-          ? 0
-          : result.proposal.msg.payload.choices.map((choice, i) =>
-              Object.values(result.votes)
-                .filter((vote: any) => vote.msg.payload.choice === i + 1)
-                .reduce((a, b: any) => a + b.bptBalance, 0)
-            ),
-        totalWalletBalances: result.proposal.msg.payload.choices.map(
-          (choice, i) =>
-            Object.values(result.votes)
-              .filter((vote: any) => vote.msg.payload.choice === i + 1)
-              .reduce((a, b: any) => a + b.walletBalance, 0)
-        ),
-        totalVotesBalances: Object.values(result.votes).reduce(
-          (a, b: any) => a + b.balance,
-          0
-        )
-      };
+      // TODO:
+      // const bptDisabled = !!result.proposal.bpt_voting_disabled;
+      // const { snapshot } = result.proposal.msg.payload;
+      // const blockTag =
+      //   snapshot > rootState.web3.blockNumber ? 'latest' : parseInt(snapshot);
+      // console.log('block tag', result)
+      //   const votersBalances = await dispatch('getVotersBalances', {
+      //   token: payload.token,
+      //   addresses: Object.values(result.votes).map((vote: any) => vote.address),
+      //   blockTag
+      // });
+      // console.log('votersBalances', votersBalances)
+
+      // // @ts-ignore
+      // const addresses = Object.keys(votes);
+      // let votingPowers = {};
+      // if (!bptDisabled) {
+      //   votingPowers = await dispatch('getVotingPowers', {
+      //     token: result.proposal.msg.token,
+      //     blockTag,
+      //     addresses
+      //   });
+      // }
+      // result.votes = Object.fromEntries(
+      //   Object.entries(result.votes)
+      //     .map((vote: any) => {
+      //       const bptBalance = bptDisabled ? 0 : votingPowers[vote[1].address];
+      //       vote[1].balance = votersBalances[vote[1].address] + bptBalance;
+      //       vote[1].bptBalance = bptBalance;
+      //       vote[1].walletBalance = votersBalances[vote[1].address];
+      //       return vote;
+      //     })
+      //     .sort((a, b) => b[1].balance - a[1].balance)
+      //     .filter(vote => vote[1].balance > 0)
+      // );
+      // result.results = {
+      //   totalVotes: result.proposal.msg.payload.choices.map(
+      //     (choice, i) =>
+      //       Object.values(result.votes).filter(
+      //         (vote: any) => vote.msg.payload.choice === i + 1
+      //       ).length
+      //   ),
+      //   totalBalances: result.proposal.msg.payload.choices.map((choice, i) =>
+      //     Object.values(result.votes)
+      //       .filter((vote: any) => vote.msg.payload.choice === i + 1)
+      //       .reduce((a, b: any) => a + b.balance, 0)
+      //   ),
+      //   totalBptBalances: bptDisabled
+      //     ? 0
+      //     : result.proposal.msg.payload.choices.map((choice, i) =>
+      //         Object.values(result.votes)
+      //           .filter((vote: any) => vote.msg.payload.choice === i + 1)
+      //           .reduce((a, b: any) => a + b.bptBalance, 0)
+      //       ),
+      //   totalWalletBalances: result.proposal.msg.payload.choices.map(
+      //     (choice, i) =>
+      //       Object.values(result.votes)
+      //         .filter((vote: any) => vote.msg.payload.choice === i + 1)
+      //         .reduce((a, b: any) => a + b.walletBalance, 0)
+      //   ),
+      //   totalVotesBalances: Object.values(result.votes).reduce(
+      //     (a, b: any) => a + b.balance,
+      //     0
+      //   )
+      // };
       commit('GET_PROPOSAL_SUCCESS');
       return result;
     } catch (e) {

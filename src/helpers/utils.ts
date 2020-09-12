@@ -1,5 +1,5 @@
-import config from '@/helpers/config';
 import pkg from '@/../package.json';
+import config from '@/helpers/config';
 
 export function shorten(str = '') {
   return `${str.slice(0, 6)}...${str.slice(str.length - 4)}`;
@@ -40,15 +40,13 @@ export function lsRemove(key: string) {
 
 export function formatProposal(proposal) {
   proposal.msg = jsonParse(proposal.msg, proposal.msg);
-
-  // v0.1.0
-  if (proposal.msg.version === '0.1.0') {
-    proposal.msg.payload.start = 1595088000;
-    proposal.msg.payload.end = 1595174400;
-    proposal.msg.payload.snapshot = 10484400;
-    proposal.bpt_voting_disabled = '1';
-  }
-
+  // // v0.1.0
+  // if (proposal.msg.version === '0.1.0') {
+  //   proposal.msg.payload.start = 1595088000;
+  //   proposal.msg.payload.end = 1595174400;
+  //   proposal.msg.payload.snapshot = 10484400;
+  //   proposal.bpt_voting_disabled = '1';
+  // }
   return proposal;
 }
 

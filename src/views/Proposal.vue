@@ -2,9 +2,9 @@
   <Container :slim="true">
     <template v-if="loaded">
       <div class="px-4 px-md-0 mb-3">
-        <router-link :to="{ name: 'proposals' }" class="text-gray">
+        <router-link :to="{ name: 'dapps' }" class="text-gray">
           <Icon name="back" size="22" class="v-align-middle" />
-          {{ namespace.name || _shorten(namespace.token) }}
+          Dapps
         </router-link>
       </div>
       <div>
@@ -33,7 +33,7 @@
               />
             </div>
             <UiButton
-              :disabled="voteLoading || !selectedChoice || !web3.account"
+              :disabled="voteLoading || !web3.account"
               :loading="voteLoading"
               @click="modalOpen = true"
               class="d-block width-full button--submit"
@@ -75,7 +75,7 @@
                 <Icon name="external-link" class="ml-1" />
               </a>
             </div>
-            <div>
+            <!-- <div>
               <div class="mb-1">
                 <b>Start date</b>
                 <span
@@ -101,7 +101,7 @@
                   <Icon name="external-link" class="ml-1" />
                 </a>
               </div>
-            </div>
+            </div> -->
           </Block>
           <BlockResults
             :namespace="namespace"
@@ -166,9 +166,10 @@ export default {
     ...mapActions(['getProposal']),
     async loadProposal() {
       const proposalObj = await this.getProposal({
-        token: this.namespace.token,
+        // token: this.namespace.token,
         id: this.id
       });
+      console.log('ts', this.ts, proposalObj);
       this.proposal = proposalObj.proposal;
       this.votes = proposalObj.votes;
       this.results = proposalObj.results;

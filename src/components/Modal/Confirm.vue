@@ -3,14 +3,13 @@
     <form @submit.prevent="handleSubmit" class="d-flex flex-column flex-auto">
       <h3 class="m-4 mb-0 text-center">Confirm vote</h3>
       <h4 class="m-4 mb-0 text-center">
-        Are you sure you want to vote "{{
-          proposal.msg.payload.choices[selectedChoice - 1]
-        }}"? <br />This action <b>cannot</b> be undone.
+        Are you sure you want to vote <br />This action <b>cannot</b> be undone.
       </h4>
       <div class="m-4 p-4 border rounded-2 text-white">
         <div class="d-flex">
           <span v-text="'Option'" class="flex-auto text-gray mr-1" />
-          {{ proposal.msg.payload.choices[selectedChoice - 1] }}
+          <!-- {{ proposal.msg.payload.choices[selectedChoice - 1] }} -->
+          sekecred
         </div>
         <div class="d-flex">
           <span v-text="'Snapshot'" class="flex-auto text-gray mr-1" />

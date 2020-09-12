@@ -3,25 +3,15 @@
     <Container>
       <div class="mb-3 d-flex">
         <div class="flex-auto">
-          <div>
-            <a
-              :href="_etherscanLink(namespace.token)"
-              target="_blank"
-              class="text-gray"
-            >
-              {{ namespace.name || _shorten(key) }}
-              <Icon name="external-link" class="ml-1" />
-            </a>
-          </div>
-          <div class="d-flex flex-items-center flex-auto">
+          <!-- <div class="d-flex flex-items-center flex-auto"> -->
             <h2 class="mr-2">
-              Proposals
+              Dapps
               <UiCounter :counter="totalProposals" class="ml-1" />
             </h2>
-          </div>
+          <!-- </div> -->
         </div>
         <router-link v-if="web3.account" :to="{ name: 'create' }">
-          <UiButton>New proposal</UiButton>
+          <UiButton>List new DApp</UiButton>
         </router-link>
       </div>
     </Container>
@@ -90,8 +80,8 @@ export default {
       return Object.fromEntries(
         Object.entries(this.proposals)
           .filter(proposal => {
-            if (!this.namespace.verified.includes(proposal[1].address))
-              return false;
+            // if (!this.namespace.verified.includes(proposal[1].address))
+            //   return false;
             if (this.selectedState === 'All') return true;
             if (
               this.selectedState === 'Active' &&
@@ -122,7 +112,7 @@ export default {
   },
   async created() {
     this.loading = true;
-    this.proposals = await this.getProposals(this.namespace.token);
+    this.proposals = await this.getProposals();
     this.loading = false;
     this.loaded = true;
   }
