@@ -1,9 +1,8 @@
 import express from 'express';
-// import { sendMessage } from './discord';
-import { pinJson } from './ipfs';
-import redis from './redis';
-import relayer from './relayer';
-import { jsonParse } from './utils';
+import { pinJson } from './helpers/ipfs';
+import redis from './helpers/redis';
+import relayer from './helpers/relayer';
+import { jsonParse } from './helpers/utils';
 
 const router = express.Router();
 

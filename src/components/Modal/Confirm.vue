@@ -79,7 +79,8 @@ export default {
         type: 'vote',
         payload: {
           proposal: this.id,
-          choice: this.selectedChoice
+          choice: this.selectedChoice,
+          metadata: {}
         }
       });
       this.$emit('reload');

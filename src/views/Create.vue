@@ -142,7 +142,8 @@ export default {
         description: '',
         start: '',
         end: '',
-        snapshot: ''
+        snapshot: '',
+        metadata: {}
       },
       modalOpen: false,
       selectedDate: ''
