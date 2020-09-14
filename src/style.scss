@@ -42,14 +42,21 @@ a {
 }
 
 ::placeholder {
-  color: $gray;
+  color: #6a737d;
 }
 
 .input {
-  outline: none;
-  color: $white;
-  background-color: transparent;
+  background: $bg-gray-light;
   border: none;
+  box-shadow: inset 5px 0px 25px rgba(0, 0, 0, 0.25);
+  border-radius: 25.5px;
+  line-height: 28px;
+  font-size: 24px;
+  height: 51px;
+}
+
+.text-area {
+  height: 262px !important;
 }
 
 textarea {

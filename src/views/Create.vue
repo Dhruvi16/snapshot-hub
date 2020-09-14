@@ -14,42 +14,59 @@
               v-autofocus
               v-model="form.name"
               maxlength="128"
-              class="h1 mb-2 input"
+              class="mb-md-5 px-md-3 input"
               placeholder="Name of DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.url"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="URL of DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.category"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="Category DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.builtOn"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="Built on"
-            />
-            <input
-              v-autofocus
-              v-model="form.stage"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="stage"
             />
             <textarea-autosize
               v-model="form.description"
               maxlength="10240"
-              class="input"
+              class="mb-md-5 px-md-3 py-md-3 input text-area"
               placeholder="Description of dapp"
+            />
+            <input
+              v-autofocus
+              type="url"
+              v-model="form.url"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="URL of DApp"
+            />
+            <CustomSelect
+              v-autofocus
+              v-model="form.category"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['DeFi', 'Games & Collectibles', 'Marketplace', 'VR', 'NFT', 'Social Media', 'Other']"
+              :placeholder="'Category DApp'" />
+            <CustomSelect
+              v-autofocus
+              v-model="form.builtOn"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['Ethereum', 'EOS', 'Marketplace', 'NEO', 'Tron', 'Telos']"
+              :placeholder="'Built on'" />
+            <CustomSelect
+              v-autofocus
+              v-model="form.stage"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['Testnet', 'Alpha', 'Beta', 'Mainnet']"
+              :placeholder="'Stage'" />
+            <input
+              v-autofocus
+              type="text"
+              v-model="form.contract"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="Contract addresses"
+            />
+            <input
+              v-autofocus
+              type="url"
+              v-model="form.avatar"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="Avatar link"
             />
           </div>
         </div>
@@ -127,6 +144,7 @@
 <script>
 import { mapActions } from 'vuex';
 import moment from 'moment';
+import CustomSelect from '../components/Ui/CustomSelect.vue'
 
 export default {
   data() {
@@ -140,6 +158,8 @@ export default {
         builtOn: '',
         stage: '',
         description: '',
+        contract:'',
+        avatar: '',
         start: '',
         end: '',
         snapshot: '',
@@ -148,6 +168,9 @@ export default {
       modalOpen: false,
       selectedDate: ''
     };
+  },
+  components: {
+    CustomSelect
   },
   computed: {
     // namespace() {
@@ -205,3 +228,7 @@ export default {
   }
 };
 </script>
+
+<style>
+  
+</style>
