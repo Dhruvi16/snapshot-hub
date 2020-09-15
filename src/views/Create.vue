@@ -60,14 +60,15 @@
               class=" mb-md-5 px-md-3 input"
               placeholder="Contract addresses"
             />
-            <input
+            <!-- <input
               v-autofocus
-              type="url"
+              type=""
               v-model="form.avatar"
               maxlength="128"
               class=" mb-md-5 px-md-3 input"
               placeholder="Avatar link"
-            />
+            /> -->
+            <CustomUpload v-model="form.avatar" />
           </div>
         </div>
         <!-- <Block title="Choices">
@@ -144,7 +145,8 @@
 <script>
 import { mapActions } from 'vuex';
 import moment from 'moment';
-import CustomSelect from '../components/Ui/CustomSelect.vue'
+import CustomSelect from '../components/Ui/CustomSelect.vue';
+import CustomUpload from '../components/Ui/CustomUpload.vue';
 
 export default {
   data() {
@@ -170,7 +172,8 @@ export default {
     };
   },
   components: {
-    CustomSelect
+    CustomSelect,
+    CustomUpload
   },
   computed: {
     // namespace() {
