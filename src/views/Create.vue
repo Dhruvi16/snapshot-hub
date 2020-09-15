@@ -7,7 +7,7 @@
       </router-link>
     </div> -->
     <div>
-      <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5">
+      <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5 pt-8">
         <div class="px-4 px-md-0">
           <div class="d-flex flex-column mb-6">
             <input
@@ -94,7 +94,7 @@
           </UiButton>
         </Block> -->
       </div>
-      <div class="col-12 col-lg-4 float-left">
+      <div class="col-12 col-lg-4 float-left pt-8">
         <Block title="Actions">
           <!-- <div class="mb-2">
             <UiButton
