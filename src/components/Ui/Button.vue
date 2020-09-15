@@ -38,7 +38,7 @@ export default {
     border: 1px solid $white;
 
     &:hover {
-      color: $white;
+      color: rgba(42, 47, 53, 0.8);
       background-color: $white;
       border: 1px solid $white;
     }
