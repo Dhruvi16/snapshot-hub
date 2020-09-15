@@ -1,6 +1,6 @@
 <template>
   <div class="custom-select" :tabindex="tabindex" @blur="open = false">
-    <div class="selected" :class="{open: open}" @click="open = !open">
+    <div :class="[open? 'selected-not-open': 'selected']" @click="open = !open" >
       <div v-if="selected">
         {{ selected }}
       </div>
@@ -77,6 +77,21 @@ export default {
   height: 51px;
 }
 
+.selected-not-open {
+  padding-left: 16px;
+  padding-top: 12px;
+  cursor: pointer;
+  user-select: none;
+  background: $bg-gray-light;
+  border: none;
+  line-height: 28px;
+  color: $gray;
+  font-size: 24px;
+  height: 51px;
+  border-top-left-radius: 25.5px;
+  border-top-right-radius: 25.5px;
+}
+
 .selected:after {
   position: absolute;
   content: "";
@@ -95,10 +110,10 @@ export default {
   overflow: auto;
   position: absolute;
   box-shadow: inset 5px 0px 25px rgba(0, 0, 0, 0.25);
-  border-radius: 25.5px;
+  border-bottom-left-radius: 25.5px;
+  border-bottom-right-radius: 25.5px;
   left: 0;
   right: 0;
-  margin-top: 8px;
   z-index: 2;
 }
 
@@ -108,11 +123,13 @@ export default {
   padding-left: 16px;
   cursor: pointer;
   user-select: none;
+  font-size: 24px;
 }
 
 .item:hover {
-  background-color: $bg-blue;
-  border: 1px solid $bg-blue;
+  background-color: #616669;
+  border: 1px solid #616669;
+  color: $black;
 }
 
 .selectHide {
