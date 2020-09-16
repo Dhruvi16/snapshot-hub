@@ -145,7 +145,7 @@
             </UiButton>
           </div> -->
           <UiButton
-            @click="handleSubmit"
+            @click="submit"
             :loading="loading"
             class="d-block width-full button--submit">
             Publish
@@ -256,14 +256,17 @@ export default {
   },
   methods: {
     ...mapActions(['send']),
-    async handleSubmit() {
+    submit() {
       this.empty = !this.$v.form.$anyDirty;
       this.errors = this.$v.form.$anyError;
       this.uiState = "submit clicked";
       if (this.errors === false && this.empty === false) {
         //this is where you send the responses
         this.uiState = "form submitted";
+        this.handleSubmit();
       }
+    },
+    async handleSubmit() {
       this.loading = true;
       this.form.start = moment()
         .add(1, 'weeks')
