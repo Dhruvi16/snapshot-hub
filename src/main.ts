@@ -11,9 +11,11 @@ import store from '@/store';
 import mixins from '@/mixins';
 import i18n from '@/i18n';
 import '@/style.scss';
+import Vuelidate from 'vuelidate'
 
 Vue.use(infiniteScroll);
 Vue.use(TextareaAutosize);
+Vue.use(Vuelidate);
 
 const requireComponent = require.context('@/components', true, /[\w-]+\.vue$/);
 requireComponent.keys().forEach(fileName => {
