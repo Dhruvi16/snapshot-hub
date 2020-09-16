@@ -7,50 +7,68 @@
       </router-link>
     </div> -->
     <div>
-      <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5">
+      <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5 pt-8">
         <div class="px-4 px-md-0">
           <div class="d-flex flex-column mb-6">
             <input
               v-autofocus
               v-model="form.name"
               maxlength="128"
-              class="h1 mb-2 input"
+              class="mb-md-5 px-md-3 input"
               placeholder="Name of DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.url"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="URL of DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.category"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="Category DApp"
-            />
-            <input
-              v-autofocus
-              v-model="form.builtOn"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="Built on"
-            />
-            <input
-              v-autofocus
-              v-model="form.stage"
-              maxlength="128"
-              class="h1 mb-2 input"
-              placeholder="stage"
             />
             <textarea-autosize
               v-model="form.description"
               maxlength="10240"
-              class="input"
+              class="mb-md-5 px-md-3 py-md-3 input text-area"
               placeholder="Description of dapp"
             />
+            <input
+              v-autofocus
+              type="url"
+              v-model="form.url"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="URL of DApp"
+            />
+            <CustomSelect
+              v-autofocus
+              v-model="form.category"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['DeFi', 'Games & Collectibles', 'Marketplace', 'VR', 'NFT', 'Social Media', 'Other']"
+              :placeholder="'Category DApp'" />
+            <CustomSelect
+              v-autofocus
+              v-model="form.builtOn"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['Ethereum', 'EOS', 'Marketplace', 'NEO', 'Tron', 'Telos']"
+              :placeholder="'Built on'" />
+            <CustomSelect
+              v-autofocus
+              v-model="form.stage"
+              maxlength="128"
+              class="mb-md-5"
+              :options="['Testnet', 'Alpha', 'Beta', 'Mainnet']"
+              :placeholder="'Stage'" />
+            <input
+              v-autofocus
+              type="text"
+              v-model="form.contract"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="Contract addresses"
+            />
+            <!-- <input
+              v-autofocus
+              type=""
+              v-model="form.avatar"
+              maxlength="128"
+              class=" mb-md-5 px-md-3 input"
+              placeholder="Avatar link"
+            /> -->
+            <CustomUpload v-model="form.avatar" />
           </div>
         </div>
         <!-- <Block title="Choices">
@@ -77,7 +95,7 @@
           </UiButton>
         </Block> -->
       </div>
-      <div class="col-12 col-lg-4 float-left">
+      <div class="col-12 col-lg-4 float-left pt-8">
         <Block title="Actions">
           <!-- <div class="mb-2">
             <UiButton
@@ -127,6 +145,8 @@
 <script>
 import { mapActions } from 'vuex';
 import moment from 'moment';
+import CustomSelect from '../components/Ui/CustomSelect.vue';
+import CustomUpload from '../components/Ui/CustomUpload.vue';
 
 export default {
   data() {
@@ -140,6 +160,8 @@ export default {
         builtOn: '',
         stage: '',
         description: '',
+        contract:'',
+        avatar: '',
         start: '',
         end: '',
         snapshot: '',
@@ -148,6 +170,10 @@ export default {
       modalOpen: false,
       selectedDate: ''
     };
+  },
+  components: {
+    CustomSelect,
+    CustomUpload
   },
   computed: {
     // namespace() {
