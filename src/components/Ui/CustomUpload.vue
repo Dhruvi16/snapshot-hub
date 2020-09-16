@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="!image">
-      <div class="input" @click="trigger">Avatar</div>
+      <div class="input" @click="trigger">Avatar <i class="fas fa-caret-up icon"></i></div>
       <input type="file" class="ignore" ref="fileInput" @change="onFileChange">
     </div>
     <div v-else>
-    <div class="input" @click="trigger1">Avatar uploaded</div>
+    <div class="input" @click="trigger1">Remove uploaded avatar <i class="fas fa-times icon"></i></div>
     <button @click="removeImage" class="ignore" ref="removeFile">Remove image</button>
   </div>
   </div>
@@ -65,14 +65,10 @@ export default {
   cursor: pointer;
 }
 
-.input:after {
-  position: absolute;
-  content: "\e75c";
-  top: 22px;
-  right: 16px;
-  width: 0;
-  height: 0;
-  border: 9px solid transparent;
-  border-color: $gray transparent transparent transparent;
+.icon {
+  float: right;
+  padding-right: 20px;
+  font-size: 28px;
 }
+
 </style>
