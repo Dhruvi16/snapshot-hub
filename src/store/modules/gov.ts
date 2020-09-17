@@ -12,7 +12,7 @@ import { formatEther } from '@ethersproject/units';
 import Vue from 'vue';
 
 const state = {
-  namespace: namespaces['balancer'],
+  namespace: namespaces['tdai'],
   votingPower: 0,
   votingPowerByPools: {},
   walletBalance: 0,
