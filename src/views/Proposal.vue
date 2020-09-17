@@ -10,71 +10,77 @@
       <div>
         <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5">
           <div class="px-4 px-md-0">
-            <h1 class="mb-2">
+            <h1 class="mb-2 text-gray">
               {{ payload.name }}
-              <span v-text="`#${id.slice(0, 7)}`" class="text-gray" />
+              <span v-text="`#${id.slice(0, 7)}`" />
             </h1>
             <State :proposal="proposal" class="mb-4" />
             <UiMarkdown :body="payload.body" class="mb-6" />
           </div>
-          <Block
-            v-if="ts >= payload.start && ts < payload.end"
-            class="mb-4"
-            title="Cast your vote"
-          >
-            <div class="mb-3">
-              <UiButton
-                v-for="(choice, i) in payload.choices"
-                :key="i"
-                v-text="choice"
-                @click="selectedChoice = i + 1"
-                class="d-block width-full mb-2"
-                :style="selectedChoice === i + 1 && 'border-color: white;'"
-              />
+          <Block title="DApp Details">
+            <div class="text-white h3">
+              {{ payload.name }}
             </div>
-            <UiButton
-              :disabled="voteLoading || !web3.account"
-              :loading="voteLoading"
-              @click="modalOpen = true"
-              class="d-block width-full button--submit"
-            >
-              Vote
-            </UiButton>
+            <div class="h4 mb-3">
+              {{ payload.description }}
+            </div>
+            <div class="text-white h3">
+              Contract Addresses
+            </div>
+            <div class="h4 mb-3">
+              {{ payload.contract }}
+            </div>
+            <div class="text-white h3">
+              Category
+            </div>
+            <div class="h4 mb-3">
+              {{ payload.category }}
+            </div>
+            <div class="text-white h3">
+              Built On
+            </div>
+            <div class="h4 mb-3">
+              {{ payload.builtOn }}
+            </div>
+            <div class="text-white h3">
+              Stage
+            </div>
+            <div class="h4 mb-3">
+              {{ payload.stage }}
+            </div>
+            <div class="text-white h3">
+              Avatar
+            </div>
+            <div class="h4 mb-3">
+              {{ payload.avatar }}
+            </div>
+            <a :href="'https://' + payload.url">
+              <UiButton class="d-block width-full bg-green mb-2">View DApp</UiButton>
+            </a>
           </Block>
-          <BlockVotes
-            :namespace="namespace"
-            :proposal="proposal"
-            :votes="votes"
-          />
         </div>
         <div class="col-12 col-lg-4 float-left">
-          <Block title="Informations">
-            <div class="mb-1">
-              <b>Token</b>
-              <span class="float-right text-white">
-                <Token :address="proposal.msg.token" class="mr-1" />
-                {{ namespace.symbol }}
-              </span>
-            </div>
+          <Block title="Information">
             <div class="mb-1">
               <b>Author</b>
-              <User
-                :address="proposal.address"
-                :verified="namespace.verified"
-                class="float-right"
-              />
+              <User :address="proposal.address" :verified="namespace.verified" class="float-right" />
             </div>
             <div class="mb-1">
               <b>IPFS</b>
-              <a
-                :href="_ipfsUrl(proposal.ipfsHash)"
-                target="_blank"
-                class="float-right"
-              >
+              <a :href="_ipfsUrl(proposal.ipfsHash)" target="_blank" class="float-right">
                 #{{ proposal.ipfsHash.slice(0, 7) }}
                 <Icon name="external-link" class="ml-1" />
               </a>
             </div>
+            <div class="mb-3">
+              <UiButton v-for="(choice, i) in payload.choices" :key="i" v-text="choice" @click="selectedChoice = i + 1"
+                class="d-block width-full mb-2" :style="selectedChoice === i + 1 && 'border-color: white;'" />
+              <UiButton :disabled="voteLoading || !web3.account" :loading="voteLoading" @click="modalOpen = true"
+                class="d-block width-full button--submit my-3">
+                Vote
+              </UiButton>
+            </div>
+
             <!-- <div>
               <div class="mb-1">
                 <b>Start date</b>
@@ -103,25 +109,18 @@
               </div>
             </div> -->
           </Block>
-          <BlockResults
+          <BlockVotes :namespace="namespace" :proposal="proposal" :votes="votes" />
+          <!-- <BlockResults
             :namespace="namespace"
             :payload="payload"
             :results="results"
             :votes="votes"
-          />
+          /> -->
         </div>
       </div>
-      <ModalConfirm
-        :open="modalOpen"
-        @close="modalOpen = false"
-        @reload="loadProposal"
-        :namespace="namespace"
-        :proposal="proposal"
-        :id="id"
-        :selectedChoice="selectedChoice"
-        :votingPower="votingPower"
-        :snapshot="payload.snapshot"
-      />
+      <ModalConfirm :open="modalOpen" @close="modalOpen = false" @reload="loadProposal" :namespace="namespace"
+        :proposal="proposal" :id="id" :selectedChoice="selectedChoice" :votingPower="votingPower"
+        :snapshot="payload.snapshot" />
     </template>
     <div v-else class="text-center">
       <UiLoading class="big" />
@@ -130,56 +129,61 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import namespaces from '@/namespaces.json';
+  import {
+    mapActions
+  } from 'vuex';
+  import namespaces from '@/namespaces.json';
 
-export default {
-  data() {
-    return {
-      key: this.$route.params.key,
-      id: this.$route.params.id,
-      loading: false,
-      loaded: false,
-      voteLoading: false,
-      proposal: {},
-      votes: {},
-      results: [],
-      modalOpen: false,
-      selectedChoice: 0,
-      votingPower: 0
-    };
-  },
-  computed: {
-    namespace() {
-      return namespaces[this.key]
-        ? namespaces[this.key]
-        : { token: this.key, verified: [] };
+  export default {
+    data() {
+      return {
+        key: this.$route.params.key,
+        id: this.$route.params.id,
+        loading: false,
+        loaded: false,
+        voteLoading: false,
+        proposal: {},
+        votes: {},
+        results: [],
+        modalOpen: false,
+        selectedChoice: 0,
+        votingPower: 0
+      };
     },
-    payload() {
-      return this.proposal.msg.payload;
+    computed: {
+      namespace() {
+        return namespaces[this.key] ?
+          namespaces[this.key] :
+          {
+            token: this.key,
+            verified: []
+          };
+      },
+      payload() {
+        return this.proposal.msg.payload;
+      },
+      ts() {
+        return (Date.now() / 1e3).toFixed();
+      }
     },
-    ts() {
-      return (Date.now() / 1e3).toFixed();
+    methods: {
+      ...mapActions(['getProposal']),
+      async loadProposal() {
+        const proposalObj = await this.getProposal({
+          // token: this.namespace.token,
+          id: this.id
+        });
+        console.log('ts', this.ts, proposalObj);
+        this.proposal = proposalObj.proposal;
+        this.votes = proposalObj.votes;
+        this.results = proposalObj.results;
+      }
+    },
+    async created() {
+      this.loading = true;
+      await this.loadProposal();
+      this.loading = false;
+      this.loaded = true;
     }
-  },
-  methods: {
-    ...mapActions(['getProposal']),
-    async loadProposal() {
-      const proposalObj = await this.getProposal({
-        // token: this.namespace.token,
-        id: this.id
-      });
-      console.log('ts', this.ts, proposalObj);
-      this.proposal = proposalObj.proposal;
-      this.votes = proposalObj.votes;
-      this.results = proposalObj.results;
-    }
-  },
-  async created() {
-    this.loading = true;
-    await this.loadProposal();
-    this.loading = false;
-    this.loaded = true;
-  }
-};
+  };
 </script>

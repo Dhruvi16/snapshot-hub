@@ -21,7 +21,7 @@ export default {
   width: 20px;
   color: $white;
   text-align: center;
-  background-color: $gray;
+  background-color: $bg-green;
   border-radius: 10px;
   vertical-align: middle;
 }
