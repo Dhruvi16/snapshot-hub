@@ -12,11 +12,11 @@ import { formatEther } from '@ethersproject/units';
 import Vue from 'vue';
 
 const state = {
-  namespace: namespaces['balancer'],
+  namespace: namespaces['tdai'],
   votingPower: 0,
   votingPowerByPools: {},
   walletBalance: 0,
-  snapshot: 10710300
+  snapshot: 999999999
 };
 
 const mutations = {
