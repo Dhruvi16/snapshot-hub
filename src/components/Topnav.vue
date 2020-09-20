@@ -15,6 +15,7 @@
                 width="32"
                 height="32"
               />
+              <span class="h2 text-white ml-2 v-align-middle">The DApp list</span>
             </router-link>
           </div>
           <div :key="web3.account">
@@ -29,8 +30,9 @@
               </UiButton> -->
               <UiButton
                 @click="modalOpen = true"
-                class="button-outline"
+                class="button-outline text-white"
                 :loading="loading"
+                style="border-color: #ffffff"
               >
                 <Avatar :address="web3.account" size="16" class="mr-2 ml-n1" />
                 <span v-if="web3.name" v-text="web3.name" />
@@ -48,10 +50,11 @@
               v-if="showLogin"
               @click="modalOpen = true"
               :loading="loading"
+              class="text-white" style="border-color: #ffffff"
             >
               Connect wallet
             </UiButton>
-            <UiButton @click="modalAboutOpen = true" class="ml-2">
+            <UiButton @click="modalAboutOpen = true" class="ml-2 text-white" style="border-color: #ffffff">
               <span v-text="'?'" class="ml-n1 mr-n1" />
             </UiButton>
           </div>

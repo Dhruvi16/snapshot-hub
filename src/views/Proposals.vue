@@ -11,7 +11,7 @@
           <!-- </div> -->
         </div>
         <router-link v-if="web3.account" :to="{ name: 'create' }">
-          <UiButton>List new DApp</UiButton>
+          <UiButton class="text-white" style="border-color: #ffffff">List new DApp</UiButton>
         </router-link>
       </div>
     </Container>

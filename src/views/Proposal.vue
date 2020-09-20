@@ -48,12 +48,12 @@
             <div class="h4 mb-3">
               {{ payload.stage }}
             </div>
-            <div class="text-white h3">
+            <!-- <div class="text-white h3">
               Avatar
             </div>
             <div class="h4 mb-3">
               {{ payload.avatar }}
-            </div>
+            </div> -->
             <a :href="'https://' + payload.url">
               <UiButton class="d-block width-full bg-green mb-2">View DApp</UiButton>
             </a>
