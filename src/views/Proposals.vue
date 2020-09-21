@@ -5,13 +5,13 @@
         <div class="flex-auto">
           <!-- <div class="d-flex flex-items-center flex-auto"> -->
             <h2 class="mr-2">
-              Dapps
+              🕵️‍♂️ Dapps Hunted
               <UiCounter :counter="totalProposals" class="ml-1" />
             </h2>
           <!-- </div> -->
         </div>
         <router-link v-if="web3.account" :to="{ name: 'create' }">
-          <UiButton class="text-white" style="border-color: #ffffff">List new DApp</UiButton>
+          <UiButton class="text-white" style="border-color: #ffffff">Hunt new DApp</UiButton>
         </router-link>
       </div>
     </Container>
@@ -19,7 +19,7 @@
       <Block :slim="true">
         <div class="px-4 py-3 bg-gray-dark">
           <a
-            v-for="state in ['All', 'Active', 'Pending', 'Closed']"
+            v-for="state in ['All', 'Active', 'Upcoming', 'Closed']"
             :key="state"
             v-text="state"
             @click="selectedState = state"
@@ -97,7 +97,7 @@ export default {
               return true;
             }
             if (
-              this.selectedState === 'Pending' &&
+              this.selectedState === 'Upcoming' &&
               proposal[1].msg.payload.start > ts
             ) {
               return true;

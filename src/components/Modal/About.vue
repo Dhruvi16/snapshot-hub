@@ -29,9 +29,13 @@
         <span v-text="'IPFS server'" class="flex-auto text-gray mr-1" />
         {{ ipfsNode }}
       </div>
-      <div class="d-flex">
+      <!-- <div class="d-flex">
         <span v-text="'Hub'" class="flex-auto text-gray mr-1" />
         {{ config.hubUrl }}
+      </div> -->
+      <div class="d-flex">
+        <span v-text="'Credits'" class="flex-auto text-gray mr-1" />
+        <a> Fabien & Balancer </a>
       </div>
     </div>
     <div class="m-4">

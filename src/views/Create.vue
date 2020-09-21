@@ -6,6 +6,12 @@
         {{ namespace.name || _shorten(namespace.token) }}
       </router-link>
     </div> -->
+    <div>  
+      <router-link :to="{ name: 'dapps' }" class="text-gray">
+      <Icon name="back" size="22" class="v-align-middle" />
+          Home
+      </router-link>
+      </div>
     <div>
       <div class="col-12 col-lg-8 float-left pr-0 pr-lg-5 pt-8">
         <div class="px-4 px-md-0">
@@ -55,7 +61,7 @@
               v-model="$v.form.builtOn.$model"
               maxlength="128"
               class="mt-md-5"
-              :options="['Ethereum', 'EOS', 'Marketplace', 'NEO', 'Tron', 'Telos']"
+              :options="['Ethereum', 'EOS', 'NEO', 'Tron', 'Telos']"
               :placeholder="'Built on'" />
             <div v-if="errors">
               <p class="error" v-if="!$v.form.builtOn.required">The technology on which DApp is built is required.</p>

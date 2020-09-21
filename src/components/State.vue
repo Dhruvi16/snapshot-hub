@@ -18,7 +18,7 @@ export default {
       const { start, end } = this.proposal.msg.payload;
       if (ts > end) return { name: 'Closed', class: 'bg-purple' };
       if (ts > start) return { name: 'Active', class: 'bg-green' };
-      return { name: 'Pending' };
+      return { name: 'Upcoming' };
     }
   }
 };

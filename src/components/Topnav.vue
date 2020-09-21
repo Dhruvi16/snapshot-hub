@@ -12,10 +12,10 @@
               <img
                 src="~/@/assets/logo.svg"
                 class="mr-2 v-align-middle"
-                width="32"
-                height="32"
+                width="50"
+                height="50"
               />
-              <span class="h2 text-white ml-2 v-align-middle">The DApp list</span>
+              <!-- <span class="h3 text-white ml-2 v-align-middle">the dapp list.</span> -->
             </router-link>
           </div>
           <div :key="web3.account">
@@ -55,7 +55,7 @@
               Connect wallet
             </UiButton>
             <UiButton @click="modalAboutOpen = true" class="ml-2 text-white" style="border-color: #ffffff">
-              <span v-text="'?'" class="ml-n1 mr-n1" />
+              <span v-text="'📎'" class="ml-n1 mr-n1" />
             </UiButton>
           </div>
         </div>

@@ -4,7 +4,7 @@
       <div class="px-4 px-md-0 mb-3">
         <router-link :to="{ name: 'dapps' }" class="text-gray">
           <Icon name="back" size="22" class="v-align-middle" />
-          Dapps
+          Home
         </router-link>
       </div>
       <div>
@@ -17,7 +17,7 @@
             <State :proposal="proposal" class="mb-4" />
             <UiMarkdown :body="payload.body" class="mb-6" />
           </div>
-          <Block title="DApp Details">
+          <Block title="Dapp Details">
             <div class="text-white h3">
               {{ payload.name }}
             </div>
@@ -54,7 +54,7 @@
             <div class="h4 mb-3">
               {{ payload.avatar }}
             </div> -->
-            <a :href="'https://' + payload.url">
+            <a :href="payload.url" target="_blank">
               <UiButton class="d-block width-full bg-green mb-2">View DApp</UiButton>
             </a>
           </Block>
