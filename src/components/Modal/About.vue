@@ -12,9 +12,9 @@
       </div>
       <div class="d-flex">
         <span v-text="'Network'" class="flex-auto text-gray mr-1" />
-        {{ config.network === 'homestead' ? 'mainnet' : config.network }}
+        {{ config.network === 'homestead' ? 'Ropsten' : config.network }}
       </div>
-      <div class="d-flex">
+      <!-- <div class="d-flex">
         <span v-text="'Block number'" class="flex-auto text-gray mr-1" />
         <a
           :href="_etherscanLink(web3.blockNumber, 'block')"
@@ -28,17 +28,17 @@
       <div class="d-flex">
         <span v-text="'IPFS server'" class="flex-auto text-gray mr-1" />
         {{ ipfsNode }}
-      </div>
+      </div> -->
       <!-- <div class="d-flex">
         <span v-text="'Hub'" class="flex-auto text-gray mr-1" />
         {{ config.hubUrl }}
       </div> -->
-      <div class="d-flex">
+      <!-- <div class="d-flex">
         <span v-text="'Credits'" class="flex-auto text-gray mr-1" />
         <a> Fabien & Balancer </a>
-      </div>
+      </div> -->
     </div>
-    <div class="m-4">
+    <!-- <div class="m-4">
       <a
         :href="`https://github.com/${pkg.repository}`"
         target="_blank"
@@ -50,7 +50,7 @@
           <Icon name="external-link" class="ml-1" />
         </UiButton>
       </a>
-    </div>
+    </div> -->
   </UiModal>
 </template>
 
