@@ -6,7 +6,7 @@
         {{ namespace.name || _shorten(namespace.token) }}
       </router-link>
     </div> -->
-    <div>  
+    <div>
       <router-link :to="{ name: 'dapps' }" class="text-gray">
       <Icon name="back" size="22" class="v-align-middle" />
           Home
@@ -35,7 +35,6 @@
               <p class="error" v-if="!$v.form.description.required">DApp description is required.</p>
             </div>
             <input
-              v-autofocus
               type="url"
               v-model="$v.form.url.$model"
               maxlength="128"
@@ -43,11 +42,12 @@
               placeholder="URL of DApp"
             />
             <div v-if="errors">
-              <p class="error" v-if="!$v.form.url.required">URL of the DApp is required.</p>
+              <p class="error" v-if="!$v.form.url.required">
+                URL of the DApp is required.
+              </p>
               <p class="error" v-if="!$v.form.url.url">Please enter an appropriate URL.</p>
             </div>
             <CustomSelect
-              v-autofocus
               v-model="$v.form.category.$model"
               maxlength="128"
               class="mt-md-5"
@@ -57,7 +57,6 @@
               <p class="error" v-if="!$v.form.category.required">DApp category is required.</p>
             </div>
             <CustomSelect
-              v-autofocus
               v-model="$v.form.builtOn.$model"
               maxlength="128"
               class="mt-md-5"
@@ -67,7 +66,6 @@
               <p class="error" v-if="!$v.form.builtOn.required">The technology on which DApp is built is required.</p>
             </div>
             <CustomSelect
-              v-autofocus
               v-model="$v.form.stage.$model"
               maxlength="128"
               class="mt-md-5"
@@ -77,7 +75,6 @@
               <p class="error" v-if="!$v.form.stage.required">DApp stage is required.</p>
             </div>
             <input
-              v-autofocus
               type="text"
               v-model="$v.form.contract.$model"
               maxlength="128"
@@ -100,29 +97,6 @@
             <p v-else-if="uiState === 'form submitted'" class="success">Hooray! Your form was submitted!</p>
           </div>
         </div>
-        <!-- <Block title="Choices">
-          <div v-if="form.choices.length > 0" class="overflow-hidden mb-2">
-            <div
-              v-for="(choice, i) in form.choices"
-              :key="i"
-              class="d-flex mb-2"
-            >
-              <UiButton class="d-flex width-full">
-                <span class="mr-4">{{ i + 1 }}</span>
-                <input
-                  v-model="form.choices[i]"
-                  class="input height-full flex-auto text-center"
-                />
-                <span @click="removeChoice(i)" class="ml-4">
-                  <Icon name="close" size="12" />
-                </span>
-              </UiButton>
-            </div>
-          </div>
-          <UiButton @click="addChoice" class="d-block width-full">
-            Add choice
-          </UiButton>
-        </Block> -->
       </div>
       <div class="col-12 col-lg-4 float-left pt-8">
         <Block title="Actions">
