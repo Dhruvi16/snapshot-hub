@@ -25,6 +25,7 @@ export default {
       if (!files.length)
         return;
       this.createImage(files[0]);
+      this.$emit("input", files[0]);
     },
     createImage(file) {
       const image = new Image();
@@ -45,9 +46,6 @@ export default {
     trigger1() {
     	this.$refs.removeFile.click()
     }
-  },
-  mounted() {
-    this.$emit("image", this.image);
   }
 };
 </script>
